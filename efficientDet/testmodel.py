@@ -1,9 +1,12 @@
 import tflite_runtime.interpreter as tflite
 import cv2
 import numpy as np
+import time
+
+
 
 interpreter = tflite.Interpreter(model_path="efficientdet.tflite")
-original_image = cv2.imread("messi.jpeg")
+original_image = cv2.imread("bicycle.jpg")
 image = cv2.resize(original_image,(320,320))
 image = cv2.cvtColor(image,cv2.COLOR_BGR2RGB)
 input_image = np.expand_dims(image,0)
@@ -19,9 +22,9 @@ output_details = interpreter.get_output_details()
 # Test the model on random input data.
 
 interpreter.set_tensor(input_details[0]['index'], input_image)
-
+start_time = time.time()
 interpreter.invoke()
-
+print(time.time()-start_time)
 # The function `get_tensor()` returns a copy of the tensor data.
 # Use `tensor()` in order to get a pointer to the tensor.
 boxesPosition = interpreter.get_tensor(output_details[0]['index'])
