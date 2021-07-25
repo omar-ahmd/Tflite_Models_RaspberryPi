@@ -10,7 +10,7 @@ parser = argparse.ArgumentParser(description='A test program.')
 parser.add_argument("-n", "--label_name", help="label of the image")
 parser.add_argument("-i", "--image_path", help="image path")
 args = parser.parse_args()
-print(args)
+
 start_time = time.time()
 interpreter = tflite.Interpreter(model_path="deeplab.tflite")
 original_image = cv2.imread("Images/"+ args.image_path)
@@ -25,7 +25,7 @@ input_image = np.expand_dims(image,0)
 
 labels = np.loadtxt("labelmap.txt",dtype = str, delimiter="/n")
 arg = np.argwhere(labels==args.label_name)[0][0]
-print(arg)
+
 
 
 
